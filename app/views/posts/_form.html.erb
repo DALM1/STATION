@@ -1,0 +1,9 @@
+<%= form_with model: [@chat_room, @post], local: true do |form| %>
+  <div class="field">
+    <%= form.label :content, "Votre message" %>
+    <%= form.text_area :content %>
+  </div>
+  <div class="actions">
+    <%= form.submit "Poster" %>
+  </div>
+<% end %>

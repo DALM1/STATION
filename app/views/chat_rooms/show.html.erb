@@ -1,0 +1,14 @@
+<ul>
+  <% @chat_room.posts.each do |post| %>
+    <li>
+      <strong><%= post.user.username %></strong>: <%= post.content %>
+      <ul>
+        <% post.threads.each do |thread| %>
+          <li><strong><%= thread.user.username %></strong>: <%= thread.content %></li>
+        <% end %>
+      </ul>
+
+      <%= render 'thread_msgs/form', post: post %>
+    </li>
+  <% end %>
+</ul>
