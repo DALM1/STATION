@@ -7,16 +7,16 @@ class PostsController < ApplicationController
     @post.user = current_user
 
     if @post.save
-      redirect_to @chat_room
+      redirect_to chat_room_path(@chat_room), notice: 'Message envoyé.'
     else
-      flash[:alert] = "Le message n'a pas pu être envoyé."
-      redirect_to @chat_room
+      flash[:alert] = 'Le message ne peut pas être vide.'
+      redirect_to chat_room_path(@chat_room)
     end
   end
 
   private
 
   def post_params
-    params.require(:post).permit(:content)
+    params.require(:post).permit(:content, :file)
   end
 end

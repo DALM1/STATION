@@ -1,0 +1,37 @@
+<h2>Modifier le profil</h2>
+
+<%= form_for(@user, url: user_path(@user), method: :patch, html: { multipart: true }) do |f| %>
+  <div class="field">
+    <%= f.label :username, "Nom d'utilisateur" %><br />
+    <%= f.text_field :username %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email %>
+  </div>
+
+  <div class="field">
+    <%= f.label :avatar %><br />
+    <%= f.file_field :avatar %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password, "Nouveau mot de passe" %> (laisser vide pour ne pas changer)<br />
+    <%= f.password_field :password %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation, "Confirmez le mot de passe" %><br />
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <div class="field">
+    <%= f.label :current_password, "Mot de passe actuel" %><br />
+    <%= f.password_field :current_password %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Mettre à jour" %>
+  </div>
+<% end %>

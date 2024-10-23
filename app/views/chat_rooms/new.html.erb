@@ -1,6 +1,6 @@
 <h2>Créer une nouvelle salle de discussion</h2>
 
-<%= form_with model: @chat_room, local: true, class: "space-y-4" do |f| %>
+<%= form_with model: @chat_room, local: true, class: "space-y-4 w-1/2 h-1/2 bg-gray-900 bg-opacity-100 text-white flex flex-col items-center p-4 rounded-lg" do |f| %>
   <div>
     <%= f.label :name, "Nom de la salle" %>
     <%= f.text_field :name, class: "input-text", placeholder: "Nom de la salle" %>

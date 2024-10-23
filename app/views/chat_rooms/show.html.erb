@@ -1,7 +1,19 @@
 <div class="flex h-screen">
-  <!-- Barre latérale -->
-  <aside class="w-1/6 bg-gray-900 bg-opacity-100 text-white flex flex-col items-center p-4 rounded-lg">
-    <h1 class="text-3xl font-bold mb-6">Epichat</h1>
+  <aside class="w-1/6 bg-gray-900 bg-opacity-100 text-white flex flex-col items-center p-4">
+    <div class="flex flex-col items-center mb-6">
+      <% if current_user.avatar.attached? %>
+        <%= image_tag current_user.avatar.variant(resize_to_fill: [100, 100]), class: "w-20 h-20 rounded-full mb-2" %>
+      <% else %>
+        <%= image_tag 'gif.png', class: "w-20 h-20 rounded-full mb-2" %>
+      <% end %>
+
+      <h3 class="text-lg font-bold">
+        <%= current_user.username.present? ? current_user.username : current_user.email %>
+      </h3>
+
+      <%= link_to 'Modifier le profil', edit_profile_user_path(current_user), class: "bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg" %>
+    </div>
+
     <ul class="w-full space-y-4">
       <% @chat_rooms.each do |chat_room| %>
         <li class="w-full">
@@ -11,27 +23,38 @@
     </ul>
   </aside>
 
-  <!-- Contenu principal -->
-  <main class="w-5/6 bg-gray-800 bg-opacity-80 p-8 rounded-lg">
+  <main class="w-5/6 bg-gray-600 bg-opacity-80 p-8 rounded-lg">
     <div class="mb-4">
       <h2 class="text-2xl font-bold text-white"><%= @chat_room.name %></h2>
       <p class="text-white"><%= @chat_room.description %></p>
     </div>
 
-    <!-- Section de messages -->
     <div class="bg-gray-700 bg-opacity-80 rounded-lg p-4 h-4/5 overflow-y-auto">
       <% if @chat_room.posts.any? %>
         <% @chat_room.posts.each do |post| %>
-          <div class="bg-gray-800 bg-opacity-80 rounded-lg p-4 mb-4">
+          <div class="bg-gray-600 bg-opacity-80 rounded-lg p-4 mb-4">
             <div class="flex items-center mb-2">
               <% if post.user.avatar.attached? %>
                 <%= image_tag post.user.avatar.variant(resize_to_fill: [40, 40]), class: "w-10 h-10 rounded-full mr-4" %>
               <% else %>
-                <div class="w-10 h-10 bg-gray-600 rounded-full mr-4"></div>
+                <%= image_tag 'gif.png', class: "w-10 h-10 rounded-full mr-4" %>
               <% end %>
-              <h3 class="text-lg text-white"><%= post.user.email %></h3>
+              <h3 class="text-lg text-white">
+                <%= post.user.username.present? ? post.user.username : post.user.email %>
+              </h3>
             </div>
             <p class="text-white"><%= post.content %></p>
+
+            <!-- Affichage du fichier envoyé -->
+            <% if post.file.attached? %>
+              <% if post.file.content_type.start_with?('image/') %>
+                <%= image_tag post.file, class: "mt-2 w-48 h-auto rounded-lg" %>
+              <% else %>
+                <div class="mt-2">
+                  <%= link_to post.file.filename.to_s, rails_blob_path(post.file, disposition: "attachment"), class: "text-blue-500 hover:underline" %>
+                </div>
+              <% end %>
+            <% end %>
           </div>
         <% end %>
       <% else %>
@@ -39,17 +62,29 @@
       <% end %>
     </div>
 
-    <!-- Formulaire pour ajouter un message -->
     <div class="mt-4">
-      <%= form_with(model: [@chat_room, @post], local: true) do |form| %>
+      <%= form_with(model: [@chat_room, @post], local: true, html: { multipart: true }) do |form| %>
         <% if @post.errors.any? %>
           <div class="mb-4">
             <p class="text-red-500">Le message ne peut pas être vide.</p>
           </div>
         <% end %>
-        <div class="flex space-x-2">
-          <%= form.text_area :content, placeholder: "Entrez votre message", class: "w-full bg-gray-600 bg-opacity-80 text-white px-4 py-2 rounded-lg", rows: 3 %>
-          <%= form.submit "Envoyer", class: "bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg" %>
+
+        <div class="flex space-x-2 items-center">
+          <label for="file-upload" class="cursor-pointer bg-gray-600 bg-opacity-80 text-white p-2 rounded-lg hover:bg-gray-500">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l7.071-7.071a4 4 0 00-5.656-5.657l-8.486 8.486a6 6 0 008.485 8.485l7.071-7.071"></path>
+            </svg>
+          </label>
+          <%= form.file_field :file, id: "file-upload", class: "hidden" %>
+
+          <%= form.text_area :content, placeholder: "Entrez votre message", class: "w-full bg-gray-600 bg-opacity-80 text-white px-4 py-2 rounded-lg resize-none", rows: 1 %>
+
+          <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white p-2 rounded-lg flex items-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </button>
         </div>
       <% end %>
     </div>
