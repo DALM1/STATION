@@ -14,7 +14,7 @@
       <nav>
         <%= link_to "Accueil", root_path, class: "nav-link" %>
         <% if user_signed_in? %>
-          <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'ml-4 inline-block text-black font-bold py-2 px-4 rounded-lg' %>
+          <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'ml-4 inline-block text-black font-bold  px-4 rounded-lg' %>
       <% else %>
           <%= link_to "Se connecter", new_user_session_path, class: "nav-link" %>
           <%= link_to "S'inscrire", new_user_registration_path, class: "nav-link" %>

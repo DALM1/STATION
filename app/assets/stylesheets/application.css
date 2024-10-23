@@ -15,13 +15,37 @@
  */
 
  nav {
+  color: #fff;
+  padding-left: 1.5rem;
 
 }
 
- body {
+a {
+  padding-left: 1.8rem;
+}
+
+body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: #111827;
+  background-image: url('https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdXNmYnh3aTY2dGluOWVrNXhxaHRlMHozemszaG9saHEwYzcyYWx3dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5I1atAU3taym4/giphy.webp');
+  background-size: cover;
+  background-position: center center; /* Centre l'image */
+  background-repeat: no-repeat; /* Empêche la répétition de l'image */
+  color: #fff;
   padding: 20px;
+}
+
+button {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: none;
+}
+
+input {
+  color: black;
 }
 
 .title {
