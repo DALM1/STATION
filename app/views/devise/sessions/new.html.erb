@@ -1,0 +1,30 @@
+<h2>Se connecter</h2>
+
+<div class="container">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+    <div>
+      <%= f.label :email %>
+      <%= f.email_field :email, autofocus: true, placeholder: "Votre email" %>
+    </div>
+
+    <div>
+      <%= f.label :password %>
+      <%= f.password_field :password, autocomplete: "current-password", placeholder: "Votre mot de passe" %>
+    </div>
+
+    <div>
+      <%= f.check_box :remember_me %>
+      <%= f.label :remember_me %>
+    </div>
+
+    <div>
+      <%= f.submit "Se connecter", class: "btn" %>
+    </div>
+  <% end %>
+
+  <div class="form-footer">
+    <%= link_to "Créer un compte", new_user_registration_path %> |
+    <%= link_to "Mot de passe oublié ?", new_user_password_path %>
+  </div>
+</div>

@@ -9,6 +9,7 @@ class DirectMessagesController < ApplicationController
     @direct_message = DirectMessage.new(direct_message_params)
     @direct_message.sender = current_user
     if @direct_message.save
+      Notification.create(user: @direct_message.receiver, message: "Vous avez un nouveau message de #{current_user.username}")
       redirect_to direct_messages_path
     else
       render :index

@@ -1,0 +1,25 @@
+<h2>Créer une nouvelle salle de discussion</h2>
+
+<%= form_with model: @chat_room, local: true, class: "space-y-4" do |f| %>
+  <div>
+    <%= f.label :name, "Nom de la salle" %>
+    <%= f.text_field :name, class: "input-text", placeholder: "Nom de la salle" %>
+  </div>
+
+  <div>
+    <%= f.label :description, "Description" %>
+    <%= f.text_area :description, class: "input-text", placeholder: "Description de la salle" %>
+  </div>
+
+  <div>
+    <%= f.label :image, "Image de la salle (optionnel)" %>
+    <%= f.file_field :image, class: "input-file" %>
+  </div>
+
+  <div>
+    <%= f.label :password, "Mot de passe (optionnel)" %>
+    <%= f.password_field :password, class: "input-text", placeholder: "Mot de passe pour rejoindre" %>
+  </div>
+
+  <%= f.submit "Créer la salle", class: "btn-primary" %>
+<% end %>

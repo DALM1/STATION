@@ -13,3 +13,65 @@
  *= require_tree .
  *= require_self
  */
+
+ nav {
+
+}
+
+ body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+.title {
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+}
+
+.chat-rooms-list, .messages-list {
+  margin-top: 20px;
+}
+
+.chat-room-item, .message-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.chat-room-item h3 {
+  margin: 0;
+}
+
+.timestamp {
+  font-size: 12px;
+  color: #777;
+}
+
+.form-group {
+  margin-top: 20px;
+}
+
+.textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}

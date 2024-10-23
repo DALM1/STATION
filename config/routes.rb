@@ -1,14 +1,11 @@
 Rails.application.routes.draw do
-  get 'direct_messages/index'
-  get 'direct_messages/create'
-  get 'thread_msgs/create'
-  get 'posts/create'
-  get 'chat_rooms/index'
-  get 'chat_rooms/show'
   devise_for :users
   root to: "chat_rooms#index"
 
-  resources :chat_rooms, only: [:index, :show] do
+  resources :chat_rooms, only: [:index, :show, :new, :create] do
+    member do
+      get 'join'
+    end
     resources :posts, only: [:create]
   end
 

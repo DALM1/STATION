@@ -1,14 +1,53 @@
-<ul>
-  <% @chat_room.posts.each do |post| %>
-    <li>
-      <strong><%= post.user.username %></strong>: <%= post.content %>
-      <ul>
-        <% post.threads.each do |thread| %>
-          <li><strong><%= thread.user.username %></strong>: <%= thread.content %></li>
-        <% end %>
-      </ul>
+<div class="flex h-screen">
+  <aside class="w-1/6 bg-gray-900 text-white flex flex-col items-center p-4">
+    <h1 class="text-3xl font-bold mb-6">Epichat</h1>
+    <ul class="w-full space-y-4">
+      <% @chat_rooms.each do |chat_room| %>
+        <li class="w-full">
+          <%= link_to chat_room.name, chat_room_path(chat_room), class: "block text-lg py-2 px-4 bg-gray-800 rounded-lg hover:bg-gray-700 text-center" %>
+        </li>
+      <% end %>
+    </ul>
+  </aside>
 
-      <%= render 'thread_msgs/form', post: post %>
-    </li>
-  <% end %>
-</ul>
+  <main class="w-5/6 bg-gray-800 p-8">
+    <div class="mb-4">
+      <h2 class="text-2xl font-bold text-white"><%= @chat_room.name %></h2>
+      <p class="text-white"><%= @chat_room.description %></p>
+    </div>
+
+    <div class="bg-gray-700 rounded-lg p-4 h-4/5 overflow-y-auto">
+      <% if @chat_room.posts.any? %>
+        <% @chat_room.posts.each do |post| %>
+          <div class="bg-gray-800 rounded-lg p-4 mb-4">
+            <div class="flex items-center mb-2">
+              <% if post.user.avatar.attached? %>
+                <%= image_tag post.user.avatar.variant(resize_to_fill: [40, 40]), class: "w-10 h-10 rounded-full mr-4" %>
+              <% else %>
+                <div class="w-10 h-10 bg-gray-600 rounded-full mr-4"></div>
+              <% end %>
+              <h3 class="text-lg text-white"><%= post.user.email %></h3>
+            </div>
+            <p class="text-white"><%= post.content %></p>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="text-white">Il n'y a pas encore de messages dans cette salle.</p>
+      <% end %>
+    </div>
+
+    <div class="mt-4">
+      <%= form_with(model: [@chat_room, @post], local: true) do |form| %>
+        <% if @post.errors.any? %>
+          <div class="mb-4">
+            <p class="text-red-500">Le message ne peut pas être vide.</p>
+          </div>
+        <% end %>
+        <div class="flex space-x-2">
+          <%= form.text_area :content, placeholder: "Entrez votre message", class: "w-full bg-gray-600 text-white px-4 py-2 rounded-lg", rows: 3 %>
+          <%= form.submit "Envoyer", class: "bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg" %>
+        </div>
+      <% end %>
+    </div>
+  </main>
+</div>

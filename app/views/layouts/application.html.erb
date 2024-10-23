@@ -1,16 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Epicht</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Epichat</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
+    <%= stylesheet_link_tag "application", media: "all" %>
+    <%= javascript_include_tag "application" %>
   </head>
 
   <body>
-    <%= yield %>
+    <header>
+      <nav>
+        <%= link_to "Accueil", root_path, class: "nav-link" %>
+        <% if user_signed_in? %>
+          <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'ml-4 inline-block text-black font-bold py-2 px-4 rounded-lg' %>
+      <% else %>
+          <%= link_to "Se connecter", new_user_session_path, class: "nav-link" %>
+          <%= link_to "S'inscrire", new_user_registration_path, class: "nav-link" %>
+        <% end %>
+      </nav>
+    </header>
+
+    <div class="container">
+      <%= yield %>
+    </div>
+
+    <footer>
+      <p>&copy; 2024 Epichat</p>
+    </footer>
   </body>
 </html>
