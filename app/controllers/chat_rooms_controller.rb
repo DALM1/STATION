@@ -1,6 +1,7 @@
 class ChatRoomsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_chat_room, only: [:show, :join]
+  before_action :set_chat_room, only: [:show, :join, :destroy]
+  before_action :authorize_creator, only: [:destroy]
 
   def index
     @chat_rooms = if params[:search].present?
@@ -26,6 +27,7 @@ class ChatRoomsController < ApplicationController
 
   def create
     @chat_room = ChatRoom.new(chat_room_params)
+    @chat_room.creator = current_user
 
     if @chat_room.save
       redirect_to chat_room_path(@chat_room), notice: "Le salon de discussion a été créé avec succès."
@@ -52,6 +54,17 @@ class ChatRoomsController < ApplicationController
     end
   end
 
+  def destroy
+    if @chat_room.destroy
+      respond_to do |format|
+        format.html { redirect_to chat_rooms_path, notice: "La salle a été supprimée avec succès." }
+        format.js   # Pour les requêtes AJAX
+      end
+    else
+      redirect_to chat_room_path(@chat_room), alert: "Impossible de supprimer la salle."
+    end
+  end
+
   private
 
   def set_chat_room
@@ -60,6 +73,12 @@ class ChatRoomsController < ApplicationController
 
   def chat_room_params
     params.require(:chat_room).permit(:name, :description, :password, :image)
+  end
+
+  def authorize_creator
+    unless @chat_room.creator == current_user
+      redirect_to chat_rooms_path, alert: "Vous n'avez pas l'autorisation de supprimer cette salle."
+    end
   end
 
   def accessible_chat_rooms

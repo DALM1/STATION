@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_24_093911) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_24_145945) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -49,6 +49,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_24_093911) do
     t.string "image"
     t.string "password"
     t.string "description"
+    t.bigint "creator_id", null: false
+    t.index ["creator_id"], name: "index_chat_rooms_on_creator_id"
   end
 
   create_table "direct_messages", force: :cascade do |t|
@@ -108,6 +110,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_24_093911) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "chat_rooms", "users", column: "creator_id"
   add_foreign_key "direct_messages", "users", column: "receiver_id"
   add_foreign_key "direct_messages", "users", column: "sender_id"
   add_foreign_key "notifications", "chat_rooms"

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root to: "chat_rooms#index"
 
-  resources :chat_rooms, only: [:index, :show, :new, :create] do
+  resources :chat_rooms, only: [:index, :show, :new, :create, :destroy] do
     member do
       get 'join'
     end

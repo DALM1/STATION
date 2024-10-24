@@ -2,6 +2,8 @@
 
 Bienvenue dans **STATION™**, une application de chat moderne permettant aux utilisateurs de rejoindre des salons de discussion, d'envoyer des messages et de personnaliser leur expérience.
 
+
+# ![STATION Mockup](app/assets/images/Capture d’écran 2024-10-24 à 17.21.31.png) STATION™
 ---
 
 ## Ruby version
