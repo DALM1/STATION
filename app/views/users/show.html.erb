@@ -15,7 +15,7 @@
       <nav class="flex justify-between items-center">
         <div class="flex items-center space-x-4">
           <%= link_to "Accueil", root_path, class: "text-lg text-white font-bold hover:text-blue-400" %>
-          <%= link_to "Salles de discussion", chat_rooms_path, class: "text-lg text-white font-bold hover:text-blue-400" %>
+          <%= link_to "Threads", chat_rooms_path, class: "text-lg text-white font-bold hover:text-blue-400" %>
         </div>
 
         <% if user_signed_in? %>
@@ -63,8 +63,6 @@
           <!-- Lien pour modifier le profil -->
           <%= link_to "Modifier le profil", edit_profile_user_path(@user), class: "inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mb-4" %>
 
-          <!-- Lien vers les salles de discussion -->
-          <%= link_to "Voir toutes les salles de discussion", chat_rooms_path, class: "inline-block bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg" %>
         </div>
       </div>
     </main>

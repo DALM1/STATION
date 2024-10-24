@@ -13,6 +13,11 @@ class ChatRoomsController < ApplicationController
   def show
     @post = Post.new
     @chat_rooms = accessible_chat_rooms
+
+    respond_to do |format|
+      format.html # Pour la navigation classique
+      format.js   # Pour les requêtes AJAX
+    end
   end
 
   def new

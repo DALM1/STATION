@@ -1,25 +1,31 @@
-# README
+# ![STATION Logo](app/assets/images/station-logo.png) STATION
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Bienvenue dans **STATION**, une application de chat moderne permettant aux utilisateurs de rejoindre des salons de discussion, d'envoyer des messages et de personnaliser leur expérience utilisateur avec un avatar et un fond d'écran.
 
-Things you may want to cover:
+---
 
-* Ruby version
+## Ruby version
 
-* System dependencies
+- **Ruby** : 3.1.2
+- **Rails** : 7.1.4.1
 
-* Configuration
+---
 
-* Database creation
+## System dependencies
 
-* Database initialization
+- **Base de données** : PostgreSQL (ou tout autre SGBD compatible)
+- **Gems clés** :
+  - Devise (pour l'authentification)
+  - Tailwind CSS (pour le design)
+  - ActiveStorage (pour le téléchargement des fichiers, avatars, et arrière-plans)
+  - Stimulus.js (pour la gestion de certaines interactions côté front-end)
 
-* How to run the test suite
+---
 
-* Services (job queues, cache servers, search engines, etc.)
+## Configuration
 
-* Deployment instructions
+1. Clone le repository :
 
-* ...
-# STATION
+   ```bash
+   git clone https://github.com/username/station.git
+   cd station
