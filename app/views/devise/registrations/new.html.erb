@@ -1,29 +1,29 @@
-<h2>S'inscrire</h2>
+<h2 class="text-2xl font-bold text-center text-white mb-6">S'inscrire</h2>
 
-<div class="container">
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+<div class="w-full max-w-md mx-auto bg-gray-900 p-8 rounded-lg shadow-lg">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), class: "space-y-6") do |f| %>
 
     <div>
-      <%= f.label :email %>
-      <%= f.email_field :email, autofocus: true, placeholder: "Votre email" %>
+      <%= f.label :email, class: "block text-gray-300 font-bold mb-2" %>
+      <%= f.email_field :email, autofocus: true, placeholder: "Votre email", class: "w-full px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:outline-none" %>
     </div>
 
     <div>
-      <%= f.label :password %>
-      <%= f.password_field :password, autocomplete: "new-password", placeholder: "Mot de passe" %>
+      <%= f.label :password, class: "block text-gray-300 font-bold mb-2" %>
+      <%= f.password_field :password, autocomplete: "new-password", placeholder: "Mot de passe", class: "w-full px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:outline-none" %>
     </div>
 
     <div>
-      <%= f.label :password_confirmation, "Confirmation du mot de passe" %>
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirmer mot de passe" %>
+      <%= f.label :password_confirmation, "Confirmation du mot de passe", class: "block text-gray-300 font-bold mb-2" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirmer mot de passe", class: "w-full px-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:outline-none" %>
     </div>
 
     <div>
-      <%= f.submit "S'inscrire", class: "btn" %>
+      <%= f.submit "S'inscrire", class: "w-full bg-green-600 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" %>
     </div>
   <% end %>
 
-  <div class="form-footer">
-    <%= link_to "Se connecter", new_user_session_path %>
+  <div class="flex justify-center items-center mt-4 text-gray-400">
+    <%= link_to "Se connecter", new_user_session_path, class: "hover:text-white" %>
   </div>
 </div>

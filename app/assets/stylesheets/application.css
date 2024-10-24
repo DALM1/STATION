@@ -14,11 +14,22 @@
  *= require_self
  */
 
+
+ .flex h-screen {
+  width: 200rem;
+ }
+
  nav {
   color: #fff;
   padding-left: 1.5rem;
 
 }
+
+
+button {
+  color: white;
+}
+
 
 header {
   background-color: #111827;
@@ -27,10 +38,13 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 0.5%;
 }
 
 a {
-  padding-left: 1.8rem;
+  display: flex;
+  justify-content: center;
+  padding: 0.8rem;
 }
 
 body {
@@ -42,6 +56,9 @@ body {
   background-repeat: no-repeat; /* Empêche la répétition de l'image */
   color: #fff;
   padding: 20px;
+  height: 50%;
+  max-height: auto;
+  min-height: 90vh;
 }
 
 button {

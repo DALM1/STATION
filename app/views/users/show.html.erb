@@ -1,17 +1,77 @@
-<div class="flex flex-col items-center mb-6">
-  <% if @user.avatar.attached? %>
-    <%= image_tag @user.avatar.variant(resize_to_fill: [100, 100]), class: "w-20 h-20 rounded-full mb-2" %>
-  <% else %>
-    <%= image_tag 'gif.png', class: "w-20 h-20 rounded-full mb-2" %>
-  <% end %>
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Epichat - Profil Utilisateur</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
+    <%= stylesheet_link_tag "application", media: "all" %>
+    <%= javascript_include_tag "application" %>
+  </head>
 
-  <h3 class="text-lg font-bold">
-    <%= @user.username.present? ? @user.username : @user.email %>
-  </h3>
+  <body class="bg-gray-800 text-white min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-gray-900 bg-opacity-100 p-5 rounded-lg w-11/12 mx-auto mb-4 shadow-lg">
+      <nav class="flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+          <%= link_to "Accueil", root_path, class: "text-lg text-white font-bold hover:text-blue-400" %>
+          <%= link_to "Salles de discussion", chat_rooms_path, class: "text-lg text-white font-bold hover:text-blue-400" %>
+        </div>
 
-  <% if current_user == @user %>
-    <div class="mt-4">
-      <%= link_to 'Modifier le profil', edit_profile_user_path(@user), class: "bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg" %>
-    </div>
-  <% end %>
-</div>
+        <% if user_signed_in? %>
+          <div class="flex items-center">
+            <%= link_to current_user.username, profile_user_path(current_user), class: "text-lg text-white font-bold hover:text-blue-400 mr-6" %>
+            <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'inline-block bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-lg' %>
+          </div>
+        <% else %>
+          <div class="flex space-x-4">
+            <%= link_to "Se connecter", new_user_session_path, class: "text-lg text-white font-bold hover:text-blue-400" %>
+            <%= link_to "S'inscrire", new_user_registration_path, class: "text-lg text-white font-bold hover:text-blue-400" %>
+          </div>
+        <% end %>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container w-11/12 mx-auto flex-1">
+      <div class="bg-gray-900 bg-opacity-90 p-8 rounded-lg shadow-lg">
+        <div class="flex items-center space-x-6">
+          <% if @user.avatar.attached? %>
+            <%= image_tag @user.avatar.variant(resize_to_fill: [150, 150]), class: "rounded-full w-36 h-36 border-4 border-gray-600" %>
+          <% else %>
+            <%= image_tag 'default-avatar.png', class: "rounded-full w-36 h-36 border-4 border-gray-600" %>
+          <% end %>
+
+          <div>
+            <h2 class="text-3xl font-bold mb-2"><%= @user.username %></h2>
+            <p class="text-lg text-gray-400"><%= @user.email %></p>
+          </div>
+        </div>
+
+        <!-- Section du fond d'écran -->
+        <div class="mt-6">
+          <h3 class="text-2xl font-semibold">Fond d'écran</h3>
+          <% if @user.background.attached? %>
+            <%= image_tag @user.background.variant(resize_to_fill: [800, 200]), class: "rounded-lg mt-4" %>
+          <% else %>
+            <p class="text-gray-400 mt-2">Aucun fond d'écran défini.</p>
+          <% end %>
+        </div>
+
+        <!-- Boutons d'action -->
+        <div class="mt-6">
+          <!-- Lien pour modifier le profil -->
+          <%= link_to "Modifier le profil", edit_profile_user_path(@user), class: "inline-block bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mb-4" %>
+
+          <!-- Lien vers les salles de discussion -->
+          <%= link_to "Voir toutes les salles de discussion", chat_rooms_path, class: "inline-block bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg" %>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-center py-4 mt-4">
+      <p>&copy; 2024 STATION™ - Tous droits réservés.</p>
+    </footer>
+  </body>
+</html>

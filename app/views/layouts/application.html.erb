@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
-    <title>Epichat</title>
+    <title>STATION</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
@@ -9,25 +9,26 @@
     <%= javascript_include_tag "application" %>
   </head>
 
-  <body>
-    <header>
-      <nav>
-        <%= link_to "Accueil", root_path, class: "nav-link" %>
+  <body style="background-image: <%= current_user&.background&.attached? ? "url(#{url_for(current_user.background)})" : asset_path('gif.png') %>; background-size: cover; background-repeat: no-repeat;" class="min-h-screen">
+    <!-- Header -->
+    <header class="bg-gray-900 text-white p-5 shadow-md">
+      <div class="container mx-auto flex justify-between">
+        <%= link_to "STATION™", root_path, class: "text-xl font-bold" %>
         <% if user_signed_in? %>
-          <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'ml-4 inline-block text-black font-bold  px-4 rounded-lg' %>
-      <% else %>
-          <%= link_to "Se connecter", new_user_session_path, class: "nav-link" %>
-          <%= link_to "S'inscrire", new_user_registration_path, class: "nav-link" %>
+          <div class="flex items-center space-x-4">
+            <%= link_to current_user.username, profile_user_path(current_user), class: "text-white hover:text-gray-300" %>
+            <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'bg-red-600 px-4 py-2 rounded-lg hover:bg-red-500' %>
+          </div>
+        <% else %>
+          <%= link_to "Se connecter", new_user_session_path, class: "text-white hover:text-gray-300" %>
+          <%= link_to "S'inscrire", new_user_registration_path, class: "ml-4 text-white hover:text-gray-300" %>
         <% end %>
-      </nav>
+      </div>
     </header>
 
-    <div class="container">
+    <div class="container mx-auto mt-8">
       <%= yield %>
     </div>
 
-    <footer>
-      <p>&copy; 2024 Epichat</p>
-    </footer>
   </body>
 </html>

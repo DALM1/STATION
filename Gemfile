@@ -28,6 +28,16 @@ gem "jbuilder"
 
 gem "devise"
 
+gem 'cloudinary', '~> 1.24.0'
+
+gem 'activestorage-cloudinary-service', '~> 0.2.0'
+
+gem 'dotenv-rails', groups: [:development, :test]
+
+gem 'image_processing', '~> 1.2'
+
+gem 'link_thumbnailer'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 

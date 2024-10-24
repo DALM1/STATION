@@ -11,9 +11,8 @@ class ChatRoomsController < ApplicationController
   end
 
   def show
-    @chat_room = ChatRoom.find(params[:id])
     @post = Post.new
-    @chat_rooms = ChatRoom.all
+    @chat_rooms = accessible_chat_rooms
   end
 
   def new
@@ -31,8 +30,13 @@ class ChatRoomsController < ApplicationController
   end
 
   def join
+    @post = Post.new
+    @chat_rooms = accessible_chat_rooms
+
     if @chat_room.password.present?
-      if params[:password] == @chat_room.password
+      if session[:chat_room_ids]&.include?(@chat_room.id) || params[:password] == @chat_room.password
+        session[:chat_room_ids] ||= []
+        session[:chat_room_ids] << @chat_room.id unless session[:chat_room_ids].include?(@chat_room.id)
         redirect_to chat_room_path(@chat_room), notice: "Vous avez rejoint la salle."
       else
         flash[:alert] = "Mot de passe incorrect."
@@ -51,5 +55,13 @@ class ChatRoomsController < ApplicationController
 
   def chat_room_params
     params.require(:chat_room).permit(:name, :description, :password, :image)
+  end
+
+  def accessible_chat_rooms
+    if session[:chat_room_ids].present?
+      ChatRoom.where('password IS NULL OR id IN (?)', session[:chat_room_ids])
+    else
+      ChatRoom.where(password: nil)
+    end
   end
 end
