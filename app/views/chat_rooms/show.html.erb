@@ -1,6 +1,6 @@
 <div class="flex h-screen">
-  <!-- Barre latérale -->
-  <aside class="w-1/6 bg-gray-900 rounded-lg bg-opacity-100 text-white flex flex-col items-center p-4 overflow-y-auto">
+  <!-- Barre latérale avec min-width -->
+  <aside class="min-w-[25rem] w-1/6 bg-gray-900 rounded-lg bg-opacity-100 text-white flex flex-col items-center p-4 overflow-y-auto">
     <div class="flex flex-col items-center mb-6">
       <% if current_user.avatar.attached? %>
         <%= image_tag current_user.avatar.variant(resize_to_fill: [100, 100]).processed, class: "w-20 h-20 rounded-full mb-2" %>
@@ -56,19 +56,22 @@
             <p class="text-white"><%= post.content %></p>
 
             <!-- Affichage de l'aperçu du lien -->
-            <% if post.preview_data.present? %>
-              <div class="border border-gray-500 rounded-lg p-4 mt-2 bg-gray-800">
-                <% if post.preview_data['video'].present? %>
-                  <iframe width="560" height="315" src="<%= post.preview_data['video'] %>" frameborder="0" allowfullscreen></iframe>
-                <% else %>
-                  <% if post.preview_data['image'].present? %>
-                    <%= image_tag post.preview_data['image'], class: 'w-full h-auto rounded-lg' %>
-                  <% end %>
-                  <h4 class="text-lg font-bold text-white mt-2"><%= post.preview_data['title'] %></h4>
-                  <p class="text-sm text-white"><%= post.preview_data['description'] %></p>
-                <% end %>
+                  <% if post.preview_data.present? %>
+          <div class="border border-gray-500 rounded-lg p-4 mt-2 bg-gray-800 max-w-full">
+            <% if post.preview_data['video'].present? %>
+              <!-- Conteneur responsif pour la vidéo -->
+              <div class="relative w-full" style="padding-top: 56.25%;"> <!-- Pour un ratio 16:9 -->
+                <iframe class="absolute top-0 left-0 w-full h-full" src="<%= post.preview_data['video'] %>" frameborder="0" allowfullscreen></iframe>
               </div>
+            <% else %>
+              <% if post.preview_data['image'].present? %>
+                <%= image_tag post.preview_data['image'], class: 'w-full h-auto rounded-lg' %>
+              <% end %>
+              <h4 class="text-lg font-bold text-white mt-2"><%= post.preview_data['title'] %></h4>
+              <p class="text-sm text-white break-words"><%= post.preview_data['description'] %></p>
             <% end %>
+          </div>
+        <% end %>
 
             <!-- Affichage du fichier envoyé -->
             <% if post.file.attached? %>
@@ -83,7 +86,7 @@
           </div>
         <% end %>
       <% else %>
-        <p class="text-white">:/ Il n'y a pas encore de messages dans cette salle.</p>
+        <p class="text-white">:/Il n'y a pas encore de messages dans cette salle.</p>
       <% end %>
     </div>
 
@@ -120,7 +123,6 @@
   </main>
 </div>
 
-<!-- Script pour envoyer avec la touche Entrée -->
 <script>
   document.addEventListener("DOMContentLoaded", function() {
     const messageForm = document.getElementById('message_form');
