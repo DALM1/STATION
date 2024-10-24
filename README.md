@@ -1,4 +1,4 @@
-# ![STATION Logo](app/assets/images/station-logo.png) STATION
+# ![STATION Logo](app/assets/images/station-logo.png) STATION™
 
 Bienvenue dans **STATION™**, une application de chat moderne permettant aux utilisateurs de rejoindre des salons de discussion, d'envoyer des messages et de personnaliser leur expérience.
 
